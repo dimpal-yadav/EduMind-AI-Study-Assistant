@@ -21,20 +21,16 @@ jobs:
             const prNumber = context.payload.pull_request.number;
             const prAuthor = context.payload.pull_request.user.login;
 
-            const message = `
-Hey @${prAuthor} 👋
-
-Thanks for opening this Pull Request! 🎉  
-A maintainer will review your changes soon.
-
-Before review, please confirm:
-- ✅ The PR title and description clearly explain the change  
-- 🧩 Code follows our contribution guidelines ([CONTRIBUTING.md](./CONTRIBUTING.md))  
-- 🧪 Tests (if any) are added or updated  
-- 🔒 No sensitive data is included  
-
-We appreciate your effort in improving **EduMind AI Study Assistant** — great job! 💪
-`;
+            const message = 
+              "Hey @" + prAuthor + " 👋\n\n" +
+              "Thanks for opening this Pull Request! 🎉\n" +
+              "A maintainer will review your changes soon.\n\n" +
+              "Before review, please confirm:\n" +
+              "- The PR title and description clearly explain the change\n" +
+              "- Code follows our contribution guidelines ([CONTRIBUTING.md](./CONTRIBUTING.md))\n" +
+              "- Tests (if any) are added or updated\n" +
+              "- No sensitive data is included\n\n" +
+              "We appreciate your effort in improving **EduMind AI Study Assistant** — great job! 💪";
 
             await github.rest.issues.createComment({
               owner: context.repo.owner,
