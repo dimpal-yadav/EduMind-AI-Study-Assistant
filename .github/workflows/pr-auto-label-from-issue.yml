@@ -1,0 +1,61 @@
+name: Auto Copy Labels from Linked Issue to PR
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  sync_labels:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Copy labels from linked issue
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            const prNumber = pr.number;
+            const prBody = pr.body || "";
+
+            // Extract issue numbers mentioned in the PR body like "Fixes #123" or "Closes #456"
+            const issueRefs = [...prBody.matchAll(/#(\\d+)/g)].map(m => Number(m[1]));
+
+            if (issueRefs.length === 0) {
+              console.log("No linked issues found in PR body.");
+              return;
+            }
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            for (const issueNumber of issueRefs) {
+              console.log(`Fetching labels from issue #${issueNumber}...`);
+
+              // Get labels from the referenced issue
+              const { data: issueLabels } = await github.rest.issues.listLabelsOnIssue({
+                owner,
+                repo,
+                issue_number: issueNumber,
+              });
+
+              const labelNames = issueLabels.map(label => label.name);
+
+              if (labelNames.length > 0) {
+                console.log(`Applying labels to PR #${prNumber}: ${labelNames.join(", ")}`);
+
+                // Apply same labels to the PR
+                await github.rest.issues.addLabels({
+                  owner,
+                  repo,
+                  issue_number: prNumber,
+                  labels: labelNames,
+                });
+              } else {
+                console.log(`No labels found on issue #${issueNumber}`);
+              }
+            }
