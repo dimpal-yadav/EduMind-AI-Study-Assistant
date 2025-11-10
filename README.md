@@ -109,6 +109,19 @@ It brings together smart tools like **Notes**, **To-Do List**, **Timer**, and **
 </p>
 
 ---
+
+## 🤝 Contributing
+
+We welcome contributions! Check out [CONTRIBUTING.md](./CONTRIBUTING.md) to learn how you can help improve EduMind AI Study Assistant.
+
+---
+
+## 📄 License
+
+This project is open-source and available under the MIT License. See [LICENSE](./LICENSE) for more details.
+
+---
+
 ## 🏁 Conclusion
 
 **EduMind – AI Study Assistant** redefines digital learning by blending productivity, creativity, and intelligent features into a single web platform.  
