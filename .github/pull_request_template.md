@@ -15,7 +15,7 @@ Include any background context and the motivation behind this change.
 Link any related issues using the format below.  
 This will **auto-close** the issue when merged:
 
-> Fixes #<issue_number>
+> Close #<issue_number>
 ---
 
 ## 🖼️ Screenshots (if applicable)
