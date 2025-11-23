@@ -28,7 +28,7 @@ import {
 
 // 🔥 YAHAN APNA ACTUAL CONFIGURATION DALEN 🔥
 const firebaseConfig = {
-    apiKey: "AIzaSyCy9UmN4nCyZWc4IkZhzWHcVYRv_jJBhuY",
+    apiKey:"",
     authDomain: "edumind-ai-study-assistant.firebaseapp.com",
     projectId: "edumind-ai-study-assistant",
     storageBucket: "edumind-ai-study-assistant.firebasestorage.app",
@@ -76,4 +76,5 @@ export {
     where,
     orderBy,
     serverTimestamp
+
 };
