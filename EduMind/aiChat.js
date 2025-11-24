@@ -364,3 +364,123 @@ class AIChat {
 document.addEventListener('DOMContentLoaded', function() {
     window.aiChat = new AIChat();
 });
+
+/* AI Chat Shortcuts logic - paste into aiChat.js or ai-shortcuts.js */
+
+// Shortcut templates
+const AI_SHORTCUTS = {
+  summarize: {
+    template: "Summarize the following text into 4-6 bullet points, short and clear:\n\n{content}",
+  },
+  explain: {
+    template: "Explain the following concept in simple terms with an everyday analogy, keep it short:\n\n{content}",
+  },
+  quiz: {
+    template: "Generate 5 multiple-choice questions (4 options each) and mark the correct answer for the following text:\n\n{content}",
+  },
+  rewrite: {
+    template: "Rewrite the following text to be more concise and professional while keeping the meaning:\n\n{content}",
+  }
+};
+
+// Get selected text inside aiInput or full content
+function getSelectedOrInputText() {
+  const input = document.getElementById('aiInput');
+  if (!input) return '';
+  // if selection exists inside textarea
+  try {
+    if (input.selectionStart !== undefined && input.selectionStart !== input.selectionEnd) {
+      return input.value.substring(input.selectionStart, input.selectionEnd).trim();
+    }
+  } catch (e) { /* ignore */ }
+  return input.value.trim();
+}
+
+function applyShortcut(key) {
+  const shortcut = AI_SHORTCUTS[key];
+  if (!shortcut) return;
+  const input = document.getElementById('aiInput');
+  if (!input) return;
+
+  const selectedText = getSelectedOrInputText();
+  const content = selectedText || input.value || '';
+  const filled = shortcut.template.replace('{content}', content);
+
+  input.value = filled;
+  input.focus();
+  // move cursor to end
+  if (input.setSelectionRange) {
+    input.setSelectionRange(input.value.length, input.value.length);
+  }
+
+  // send automatically if checkbox enabled
+  const autoSend = document.getElementById('autoSendShortcut');
+  if (autoSend && autoSend.checked) {
+    sendMessageWrapper();
+  }
+}
+
+// Hook toolbar buttons
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest && e.target.closest('.ai-shortcut');
+  if (!btn) return;
+  const key = btn.getAttribute('data-key');
+  applyShortcut(key);
+});
+
+// Basic send function wrapper: if your project already has a send/submit function, it will call it.
+// Replace or adapt window.realSendMessage if you have a different function.
+function sendMessageWrapper() {
+  const input = document.getElementById('aiInput');
+  if (!input) return;
+
+  const message = input.value.trim();
+  if (!message) return;
+
+  // if you have a real send function, call it here. Example checks:
+  if (typeof window.sendMessage === 'function') {
+    // assume existing sendMessage reads from aiInput
+    window.sendMessage();
+    input.value = '';
+    return;
+  } else if (typeof sendMessage === 'function') {
+    sendMessage();
+    input.value = '';
+    return;
+  }
+
+  // Fallback: append to local chatOutput (demo behaviour)
+  const out = document.getElementById('chatOutput');
+  if (out) {
+    const div = document.createElement('div');
+    div.className = 'chat-message user';
+    div.textContent = message;
+    out.appendChild(div);
+    // pretend to call AI and show canned reply
+    const bot = document.createElement('div');
+    bot.className = 'chat-message bot';
+    bot.textContent = 'Processing... (connect this to your AI handler)';
+    out.appendChild(bot);
+    out.scrollTop = out.scrollHeight;
+    input.value = '';
+  } else {
+    console.log('AI message:', message);
+  }
+}
+
+// Hook send button
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest && e.target.closest('#sendBtn');
+  if (!btn) return;
+  sendMessageWrapper();
+});
+
+// Enter to send (Shift+Enter for newline)
+document.addEventListener('keydown', (e) => {
+  const input = document.getElementById('aiInput');
+  if (!input) return;
+  if (e.key === 'Enter' && !e.shiftKey && document.activeElement === input) {
+    e.preventDefault();
+    sendMessageWrapper();
+  }
+});

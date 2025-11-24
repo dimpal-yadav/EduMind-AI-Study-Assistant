@@ -7372,6 +7372,24 @@ body {
   animation: slideUp 0.3s ease;
 }
 
+/* AI shortcuts & chat styles */
+.ai-chat-section { padding: 36px 0; background: var(--bg-soft, #fff); }
+.chat-wrapper { max-width: 920px; margin: 10px auto 0; }
+.ai-shortcuts { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+.ai-shortcut {
+  padding:6px 10px; border-radius:14px; border:1px solid rgba(0,0,0,0.06);
+  background: rgba(255,255,255,0.02); cursor:pointer; font-size:14px; user-select:none;
+}
+.ai-shortcut:hover { transform: translateY(-1px); transition: .12s; box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
+.chat-box { border:1px solid rgba(0,0,0,0.06); border-radius:10px; padding:12px; background:var(--card-bg,#fafafa); }
+.chat-output { max-height:220px; overflow:auto; padding:8px; border-radius:6px; background:#fff; margin-bottom:8px; border:1px solid rgba(0,0,0,0.03); }
+.chat-message.user { text-align:right; padding:6px; margin:6px 0; background:#e6f7ff; border-radius:8px; display:inline-block; }
+.chat-message.bot { text-align:left; padding:6px; margin:6px 0; background:#f4f4f4; border-radius:8px; display:inline-block; }
+#aiInput { width:100%; min-height:80px; padding:10px; border-radius:8px; resize:vertical; border:1px solid rgba(0,0,0,0.06); margin-top:8px; box-sizing:border-box; }
+.chat-actions { display:flex; justify-content:space-between; align-items:center; margin-top:8px; gap:12px; }
+.chat-actions label { font-size:13px; color: #444; }
+
+
 /* ============================================
    ANIMATIONS
    ============================================ */
