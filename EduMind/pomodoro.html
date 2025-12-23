@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pomodoro Timer</title>
+<style>
+   body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6c63ff, #574bff);
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Watch Container */
+.pomodoro-container {
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle at top, #ffffff, #f0f0ff);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.25),
+    inset 0 8px 20px rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+/* Session Text */
+#sessionType {
+  font-size: 14px;
+  color: #777;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+/* Time Display */
+.timer {
+  font-size: 48px;
+  font-weight: 700;
+  color: #6c63ff;
+  margin-bottom: 20px;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+.controls button {
+  width: 70px;
+  height: 32px;
+  border-radius: 20px;
+  border: none;
+  background: linear-gradient(135deg, #6c63ff, #574bff);
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.controls button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(108, 99, 255, 0.5);
+}
+
+
+</style>
+</head>
+<body>
+
+  <div class="pomodoro-container">
+    <h1 id="sessionType">Focus Session</h1>
+
+    <div class="timer">
+      <span id="minutes">25</span>:<span id="seconds">00</span>
+    </div>
+
+    <div class="controls">
+      <button id="startBtn">Start</button>
+      <button id="pauseBtn">Pause</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <script >
+    let focusTime = 25 * 60;   // 25 minutes
+let breakTime = 5 * 60;   // 5 minutes
+
+let timeLeft = focusTime;
+let timer = null;
+let isFocusSession = true;
+
+const minutesEl = document.getElementById("minutes");
+const secondsEl = document.getElementById("seconds");
+const sessionTypeEl = document.getElementById("sessionType");
+
+function updateDisplay() {
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+
+  minutesEl.textContent = String(minutes).padStart(2, "0");
+  secondsEl.textContent = String(seconds).padStart(2, "0");
+}
+
+function startTimer() {
+  if (timer) return; // already running
+
+  timer = setInterval(() => {
+    timeLeft--;
+    updateDisplay();
+
+    if (timeLeft === 0) {
+      switchSession();
+    }
+  }, 1000);
+}
+
+function pauseTimer() {
+  clearInterval(timer);
+  timer = null;
+}
+
+function resetTimer() {
+  pauseTimer();
+  isFocusSession = true;
+  timeLeft = focusTime;
+  sessionTypeEl.textContent = "Focus Session";
+  updateDisplay();
+}
+
+function switchSession() {
+  pauseTimer();
+
+  if (isFocusSession) {
+    isFocusSession = false;
+    timeLeft = breakTime;
+    sessionTypeEl.textContent = "Break Time ☕";
+  } else {
+    isFocusSession = true;
+    timeLeft = focusTime;
+    sessionTypeEl.textContent = "Focus Session";
+  }
+
+  startTimer();
+}
+
+document.getElementById("startBtn").onclick = startTimer;
+document.getElementById("pauseBtn").onclick = pauseTimer;
+document.getElementById("resetBtn").onclick = resetTimer;
+
+updateDisplay();
+
+  </script>
+</body>
+</html>
