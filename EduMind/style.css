@@ -7683,3 +7683,53 @@ body {
     transform: rotate(45deg);
   }
   
+  /* terms of service */
+  body {
+    background-color: #eaf7fb;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .tos-hero {
+    background: linear-gradient(135deg, #00b4cc, #009db2);
+    color: #fff;
+    padding: 70px 0;
+  }
+  
+  .tos-hero h1 {
+    font-weight: 700;
+  }
+  
+  .tos-hero p {
+    opacity: 0.9;
+  }
+  
+  .tos-content {
+    background: #eaf7fb;
+  }
+  
+  .tos-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0, 180, 204, 0.15);
+  }
+  
+  .tos-card h4 {
+    color: #00b4cc;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .tos-card p {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  
+  .tos-footer {
+    background: #ffffff;
+    color: #777;
+    font-size: 0.9rem;
+  }
+  
