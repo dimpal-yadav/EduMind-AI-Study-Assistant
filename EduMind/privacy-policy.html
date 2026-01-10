@@ -131,7 +131,7 @@
                     <h3>Resources</h3>
                     <ul>
                         <li><a href="#">Blog</a></li>
-                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#" id="docsLink">Documentation</a></li>
                         <li><a href="#">Support</a></li>
                         <li><a href="faqs.html">FAQ</a></li>
                     </ul>
@@ -151,6 +151,12 @@
         </div>
     </footer>
 
-    <script src="auth.js"></script>
+    <script>
+      document.getElementById("docsLink").addEventListener("click", function (e) {
+        e.preventDefault(); 
+        window.location.href = "https://github.com/dimpal-yadav/EduMind-AI-Study-Assistant/blob/main/README.md";
+      });
+    </script>
+    <script src="auth.js"></script> 
 </body>
 </html>
