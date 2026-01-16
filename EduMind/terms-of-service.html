@@ -187,6 +187,30 @@
         e.preventDefault();
         window.location.href = "https://github.com/dimpal-yadav/EduMind-AI-Study-Assistant/blob/main/README.md";
       });
+      // THEME TOGGLE 
+      document.addEventListener("DOMContentLoaded", () => {
+      const themeSwitch = document.getElementById("theme-switch");
+      const STORAGE_KEY = "edumind-dark-mode";
+
+      // Load saved mode
+      const isDark = localStorage.getItem(STORAGE_KEY) === "true";
+
+      if (isDark) {
+        document.body.classList.add("dark");
+        themeSwitch.checked = true;
+      }
+
+      // Toggle theme
+      themeSwitch.addEventListener("change", () => {
+        if (themeSwitch.checked) {
+          document.body.classList.add("dark");
+          localStorage.setItem(STORAGE_KEY, "true");
+        } else {
+        document.body.classList.remove("dark");
+        localStorage.setItem(STORAGE_KEY, "false");
+        }
+      });
+    });
     </script>
 
 </body>
